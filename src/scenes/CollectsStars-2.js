@@ -1,4 +1,4 @@
-import { Scene } from "phaser";
+import { Scene,  } from "phaser";
 
 export default class CollectsStars extends Scene {
   constructor() {
@@ -13,13 +13,16 @@ export default class CollectsStars extends Scene {
     this.score = 0;
     this.bomb = undefined;
     this.enemy = undefined;
+    
+    
+
   }
 
   preload() {
     this.load.image("ground", "images/platform.png");
     this.load.image("star", "images/star.png");
     this.load.image("sky", "images/Sky.png");
-    this.load.image("bomb", "images/bomb.png");
+    this.load.image("bomb", "images/bomb.png");   
   
 
     this.load.spritesheet("dude", "images/dude.png", {
@@ -28,14 +31,15 @@ export default class CollectsStars extends Scene {
     });
 
     this.load.spritesheet("enemy", "images/owlet.png", {
-      frameWidth: 40,
-      frameHeight: 40,
+      frameWidth: 32,
+      frameHeight: 32,
     });
   }
 
   create() {
     this.add.image(800, 500, "sky").setScale(1.39);
     this.player = this.physics.add.sprite(200, 900, "dude").setScale(4);
+    this.enemy = this.physics.add.sprite(200, 900, "enemy").setScale(4);
 
     this.platforms = this.physics.add.staticGroup();
 
@@ -48,6 +52,7 @@ export default class CollectsStars extends Scene {
     
 
     this.physics.add.collider(this.player, this.platforms);
+    this.physics.add.collider(this.enemy, this.platforms);
 
     this.stars = this.physics.add.group({
       key: "star",
@@ -110,6 +115,10 @@ export default class CollectsStars extends Scene {
     });
 
     this.cursor = this.input.keyboard.createCursorKeys();
+
+
+  
+    
   }
 
   update() {
@@ -142,6 +151,9 @@ export default class CollectsStars extends Scene {
         fill: "yellow",
       });
     }
+
+    
+
   }
   collectStar(player, star) {
     star.destroy();
