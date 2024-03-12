@@ -12,7 +12,7 @@ export default class CollectsStars extends Scene {
     this.scoreText = undefined;
     this.score = 0;
     this.bomb = undefined;
-    this.enemy = undefined;
+    
     
     
 
@@ -30,40 +30,43 @@ export default class CollectsStars extends Scene {
       frameHeight: 32,
     });
 
-    this.load.spritesheet("enemy", "images/owlet.png", {
-      frameWidth: 32,
-      frameHeight: 32,
-    });
+    this.load.audio("soundrop" , "sfx/jumpdrop.mp3" )
+    this.load.audio("bombsound" , "sfx/bombmeleduk.wav" )
+    this.load.audio("death" , "sfx/death.wav" )
+    this.load.audio("bgsound" , "sfx/Path to Lake Land.ogg" )
+
+    
   }
 
   create() {
     this.add.image(800, 500, "sky").setScale(1.39);
     this.player = this.physics.add.sprite(200, 900, "dude").setScale(4);
-    this.enemy = this.physics.add.sprite(200, 900, "enemy").setScale(4);
+  
+
 
     this.platforms = this.physics.add.staticGroup();
 
-    this.platforms.create(300, 400, "ground").setScale(2).refreshBody();
-    this.platforms.create(1550, 700, "ground").setScale(2).refreshBody();
-    this.platforms.create(350, 1000, "ground").setScale(2).refreshBody();
-    this.platforms.create(600, 1000, "ground").setScale(2).refreshBody();
+    this.platforms.create(300, 400, "ground").setScale(2.5).refreshBody();
+    this.platforms.create(1550, 700, "ground").setScale(2.5).refreshBody();
+    this.platforms.create(350, 1000, "ground").setScale(2.5).refreshBody();
+    this.platforms.create(600, 1000, "ground").setScale(2.5).refreshBody();
 
     this.player.setCollideWorldBounds(true);
     
 
     this.physics.add.collider(this.player, this.platforms);
-    this.physics.add.collider(this.enemy, this.platforms);
+    
 
     this.stars = this.physics.add.group({
       key: "star",
-      repeat: 10,
-      setXY: { x: 50, y: 0, stepX: 160 },
+      repeat: 16,
+      setXY: { x: 50, y: 0, stepX: 100 },
     });
 
     this.bomb = this.physics.add.group({
       key: "bomb",
-      repeat: 5,
-      setXY: { x: 100, y: 0, stepX: 320 },
+      repeat: 15,
+      setXY: { x: 100, y: 0, stepX: 200 },
     });
 
     this.physics.add.collider(this.stars, this.platforms);
@@ -86,12 +89,7 @@ export default class CollectsStars extends Scene {
       repeat: -1,
     });
 
-    this.anims.create({
-      key: "run",
-      frames: this.anims.generateFrameNumbers("enemy", { start: 0, end: 5 }),
-      frameRate: 10,
-      repeat: -1,
-    });
+
 
     this.anims.create({
       key: "turn",
@@ -115,6 +113,15 @@ export default class CollectsStars extends Scene {
     });
 
     this.cursor = this.input.keyboard.createCursorKeys();
+
+
+
+    this.backsound = this.sound.add("bgsound")
+    var soundConfig ={
+      loop:true,
+      volume:0.5,
+    }
+    this.backsound.play(soundConfig)
 
 
   
@@ -141,10 +148,12 @@ export default class CollectsStars extends Scene {
     }
 
     if (this.cursor.up.isUp) {
+      
       this.player.setVelocityY(400);
+      
     }
 
-    if (this.score >= 100) {
+    if (this.score >= 170) {
       this.physics.pause();
       this.add.text(1920 / 2 - 200, 1080 / 2, "You Win!!!", {
         fontSize: "48px",
@@ -167,6 +176,8 @@ export default class CollectsStars extends Scene {
     this.add.text(1920 / 2 - 200, 1080 / 2, "Game Over!!!", {
       fontSize: "48px",
       fill: "yellow",
+
     });
+    this.sound.play("death")
   }
 }
