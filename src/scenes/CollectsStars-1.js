@@ -16,18 +16,23 @@ export default class ColletsStars2 extends Scene {
 
   preload() {
     this.load.image("ground", "images/platform.png");
-    this.load.image("star", "images/platform.png");
-    this.load.image("sky", "images/Sky.png");
+    this.load.image("star", "images/crystal-2.png");
+    this.load.image("sky", "images/back.png");
     this.load.image("bomb", "images/bomb.png");
 
     this.load.spritesheet("dude", "images/dude.png", {
       frameWidth: 32,
       frameHeight: 32,
     });
+
+    this.load.audio("soundrop", "sfx/jumpdrop.mp3");
+    this.load.audio("bombsound", "sfx/bombmeleduk.wav");
+    this.load.audio("death", "sfx/death.wav");
+    this.load.audio("bgsound", "sfx/Path to Lake Land.ogg");
   }
 
   create() {
-    this.add.image(800, 500, "sky").setScale(1.39);
+    this.add.image(850, 500, "sky").setScale(4.8);
     this.player = this.physics.add.sprite(200, 900, "dude").setScale(4);
 
     this.platforms = this.physics.add.staticGroup();
@@ -49,8 +54,8 @@ export default class ColletsStars2 extends Scene {
 
     this.bomb = this.physics.add.group({
       key: "bomb",
-      repeat: 5,
-      setXY: { x: 100, y: 0, stepX: 320 },
+      repeat: 30,
+      setXY: { x: 130, y: 0, stepX: 120 },
     });
 
     this.physics.add.collider(this.stars, this.platforms);
@@ -95,6 +100,13 @@ export default class ColletsStars2 extends Scene {
     });
 
     this.cursor = this.input.keyboard.createCursorKeys();
+
+    this.backsound = this.sound.add("bgsound");
+    var soundConfig = {
+      loop: true,
+      volume: 0.5,
+    };
+    this.backsound.play(soundConfig);
   }
 
   update() {
