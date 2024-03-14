@@ -18,7 +18,7 @@ const config = {
       debug: false,
     },
   },
-  scene: [CollectsStars2, CollectsStars],
+  scene: [CollectsStars, CollectsStars2],
 };
 
 /* eslint-disable-next-line */

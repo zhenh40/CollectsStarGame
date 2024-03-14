@@ -16,7 +16,7 @@ export default class ColletsStars2 extends Scene {
 
   preload() {
     this.load.image("ground", "images/platform.png");
-    this.load.image("star", "images/star.png");
+    this.load.image("star", "images/platform.png");
     this.load.image("sky", "images/Sky.png");
     this.load.image("bomb", "images/bomb.png");
 
@@ -32,10 +32,10 @@ export default class ColletsStars2 extends Scene {
 
     this.platforms = this.physics.add.staticGroup();
 
-    this.platforms.create(300, 400, "ground").setScale(2).refreshBody();
-    this.platforms.create(1550, 700, "ground").setScale(2).refreshBody();
-    this.platforms.create(350, 1000, "ground").setScale(2).refreshBody();
-    this.platforms.create(600, 1000, "ground").setScale(2).refreshBody();
+    this.platforms.create(300, 400, "ground").setScale(2.5).refreshBody();
+    this.platforms.create(1550, 700, "ground").setScale(2.5).refreshBody();
+    this.platforms.create(350, 1000, "ground").setScale(2.5).refreshBody();
+    this.platforms.create(600, 1000, "ground").setScale(2.5).refreshBody();
 
     this.player.setCollideWorldBounds(true);
 
